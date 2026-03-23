@@ -7,15 +7,27 @@ on:
         required: false
         default: dist-file
         type: string
+    outputs:
+      result:
+        description: 'result of deployment'
+        value: ${{ jobs.deploy.outputs.outcome }}
+    #secrets:
+      #some-secret:
+        #required: false
 jobs: 
   deploy:
+    outputs:
+      outcome: ${{ steps.set-result.outputs.step-result}}
     runs-on: ubuntu-latest
     steps: 
       - name: Get code
         uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.artifact-name }}
-      - name : Get files
+      - name: Get files
         run: ls
       - name: Deploy
         run: echo "Deploying"
+      - name: Get result
+        id: set-result
+        run: echo "step-result=success" >> $GITHUB_OUTPUT

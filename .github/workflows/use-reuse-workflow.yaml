@@ -66,11 +66,19 @@ jobs:
         with:
           name: dist-files
           path: dist
+        #secrets:
+        #  some-secret: ${{ secrets.some_secret }}
   deploy:
     needs: build
     uses: ./.github/workflows/reusuableworkflow.yaml
     with: 
       artifact-name: dist-files
+  print-deploy output:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print deployment results
+        run: echo "${{ needs.deploy.outputs.result }}""
   report:
     runs-on: ubuntu-latest
     if: failure()
