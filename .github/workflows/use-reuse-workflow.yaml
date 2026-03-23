@@ -73,7 +73,7 @@ jobs:
     uses: ./.github/workflows/reusuableworkflow.yaml
     with: 
       artifact-name: dist-files
-  print-deploy output:
+  print_deploy_output:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
